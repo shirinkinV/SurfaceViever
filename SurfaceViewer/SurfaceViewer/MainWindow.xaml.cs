@@ -24,5 +24,20 @@ namespace SurfaceViewer
         {
             InitializeComponent();
         }
+
+        private void openGL_Resized(object sender, SharpGL.OpenGLEventArgs args)
+        {
+
+        }
+
+        private void openGL_OpenGLDraw(object sender, SharpGL.OpenGLEventArgs args)
+        {
+
+        }
+
+        private void openGL_OpenGLInitialized(object sender, SharpGL.OpenGLEventArgs args)
+        {
+
+        }
     }
 }

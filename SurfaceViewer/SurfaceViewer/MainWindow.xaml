@@ -1,8 +1,12 @@
-﻿<Window x:Class="SurfaceViewer.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:sharpGL="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="SurfaceViewer.MainWindow"
+        Title="MainWindow" MinWidth="600" MinHeight="500" d:DesignWidth="600" d:DesignHeight="500">
     <Grid>
-        
+
+        <Border BorderBrush="Black" BorderThickness="1" Margin="0,10,10,10" HorizontalAlignment="Right" Width="250"/>
+        <sharpGL:OpenGLControl x:Name="openGL" Margin="10,10,265,10" DrawFPS="True" Resized="openGL_Resized" OpenGLDraw="openGL_OpenGLDraw" OpenGLInitialized="openGL_OpenGLInitialized"/>
     </Grid>
 </Window>

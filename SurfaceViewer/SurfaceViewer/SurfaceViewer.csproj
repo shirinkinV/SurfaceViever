@@ -67,6 +67,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="parsing\Function.cs" />
+    <Compile Include="parsing\MathParserObjective.cs" />
+    <Compile Include="parsing\ParserException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

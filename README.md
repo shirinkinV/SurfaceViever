@@ -13,7 +13,7 @@
 ### Загрузка репозитория на компьютер
 После того, как вы установили приложение GitHub, вы можете с его помощью загрузить репозиторий с сервера к себе на компьютер. Для этого откройте на сайте нужный вам репозиторий (например этот) и нажмите на кнопку **Clone in Desktop**.
 
-![HelpImage](https://github.com/MechanicsFromUSU/SurfaceViewer/blob/master/help_clone.png)
+![HelpImage](https://github.com/MechanicsFromUSU/SurfaceViever/blob/master/help_clone.png)
 
 После нажатия ваш браузер выдаст запрос на открытие внешнего приложения.
 

@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SharpGL;
+using SharpGL.WPF;
 
 namespace SurfaceViewer
 {
@@ -27,17 +29,17 @@ namespace SurfaceViewer
 
         private void openGL_Resized(object sender, SharpGL.OpenGLEventArgs args)
         {
-
+            OpenGL gl = args.OpenGL;
         }
 
         private void openGL_OpenGLDraw(object sender, SharpGL.OpenGLEventArgs args)
         {
-
+            OpenGL gl = args.OpenGL;
         }
 
         private void openGL_OpenGLInitialized(object sender, SharpGL.OpenGLEventArgs args)
         {
-
+            OpenGL gl = args.OpenGL;
         }
     }
 }

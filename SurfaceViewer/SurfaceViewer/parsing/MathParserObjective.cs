@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using SurfaceViewer.Functions;
 
-namespace ApplicationUsingOpenGLAndWPF.Parsing
+namespace SurfaceViewer.Parsing
 {
 
 

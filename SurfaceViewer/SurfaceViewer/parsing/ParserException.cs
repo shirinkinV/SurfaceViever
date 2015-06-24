@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationUsingOpenGLAndWPF.Parsing
+namespace SurfaceViewer.Parsing
 {
     public class ParserException : Exception
     {

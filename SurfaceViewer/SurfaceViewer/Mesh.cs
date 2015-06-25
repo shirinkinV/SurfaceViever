@@ -191,7 +191,7 @@ namespace SurfaceViewer
             if (colors != null)
             {
                 gl.EnableClientState(OpenGL.GL_COLOR_ARRAY);
-                gl.ColorPointer(3, OpenGL.GL_UNSIGNED_INT, 0, colors);
+                gl.ColorPointer(3, OpenGL.GL_UNSIGNED_BYTE, 0, colors);
             }
             if (textCoords != null)
             {

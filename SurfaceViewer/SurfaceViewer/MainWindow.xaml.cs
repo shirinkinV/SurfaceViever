@@ -49,25 +49,34 @@ namespace SurfaceViewer
             OpenGL gl = args.OpenGL;
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
             gl.LoadIdentity();
-            gl.Translate(0.0f, 0.0f, -6.0f);
+            gl.Translate(0.0f, 0.0f, -3.0f);
             gl.Rotate(rotate, 0.0f, 1.0f, 0.0f);
             mesh.draw(gl);
             gl.Flush();
-            rotate += 3;
+            rotate += 0.3f;
         }
 
         private void openGL_OpenGLInitialized(object sender, SharpGL.OpenGLEventArgs args)
         {
             OpenGL gl = args.OpenGL;
+            gl.ClearColor(0.5f, 0.5f, 0.5f, 1);
             List<CommonFunction> coordinates = new List<CommonFunction>();
-            coordinates.Add(MathParserObjective.ParseExpressionObject("u", new string[] { "u", "v" }));
-            coordinates.Add(MathParserObjective.ParseExpressionObject("v", new string[] { "u", "v" }));
-            coordinates.Add(MathParserObjective.ParseExpressionObject("sqrt(4-u^2-v^2)", new string[] { "u", "v" }));
+            coordinates.Add(MathParserObjective.ParseExpressionObject("cos(phi)*cos(psi)", new string[] { "phi", "psi" }));
+            coordinates.Add(MathParserObjective.ParseExpressionObject("cos(phi)*sin(psi)", new string[] { "phi", "psi" }));
+            coordinates.Add(MathParserObjective.ParseExpressionObject("sin(phi)", new string[] { "phi", "psi" }));
             VectorFunction r = new VectorFunction(coordinates);
             surface = new Surface(r);
-            mesh = new Mesh(surface, 0.1, -1, 1, -1, 1, true, false);
+            mesh = new Mesh(surface, 0.05, -Math.PI / 4, Math.PI / 2, -Math.PI / 2, Math.PI / 4, true, false);
             mesh.computeMesh();
             gl.Enable(OpenGL.GL_DEPTH_TEST);
+
+            gl.Enable(OpenGL.GL_LIGHTING);
+            gl.Enable(OpenGL.GL_LIGHT0);
+            gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE, new float[] { 1, 1, 1, 1 });
+            gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, new float[] { 0, 0, 0, 1 });
+
+            gl.Material(OpenGL.GL_FRONT, OpenGL.GL_DIFFUSE, new float[] { 1, 0, 0, 1 });
+            gl.Material(OpenGL.GL_BACK, OpenGL.GL_DIFFUSE, new float[] { 0, 0, 1, 1 });
         }
     }
 }

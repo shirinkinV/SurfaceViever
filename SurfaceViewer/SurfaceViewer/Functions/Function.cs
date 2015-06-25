@@ -26,7 +26,7 @@ namespace SurfaceViewer.Functions
     public class DefinedCommonFunction : CommonFunction
     {
 
-        private Func<double[], double> function;
+        protected Func<double[], double> function;
 
         public DefinedCommonFunction(Func<double[], double> function)
         {
@@ -36,6 +36,32 @@ namespace SurfaceViewer.Functions
         public override Func<double[], double> getCommonFunction()
         {
             return function;
+        }
+    }
+
+    public class Length : CommonFunction
+    {
+
+        private VectorFunction arg;
+
+        public Length(VectorFunction arg)
+        {
+            this.arg = arg;
+        }
+
+        static double length(double[] p)
+        {
+            double sum = 0;
+            for (int i = 0; i < p.Length; i++)
+            {
+                sum += p[i] * p[i];
+            }
+            return Math.Sqrt(sum);
+        }
+
+        public override Func<double[], double> getCommonFunction()
+        {
+            return p => length(arg.getFunction()(p));
         }
     }
 

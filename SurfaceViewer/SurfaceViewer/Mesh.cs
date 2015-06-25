@@ -46,10 +46,37 @@ namespace SurfaceViewer
             this.net = net;
         }
 
+        public void setSolid(bool solid)
+        {
+            net = !solid;
+            strips = null;
+            lengths = null;
+            for (int i = 0; i <= verticalCount; i++)
+            {
+                int[] strip = new int[(horizontalCount + 2) * 2];
+
+                for (int j = 0; j <= horizontalCount + 1; j++)
+                {
+                    if (net)
+                    {
+                        strip[j * 2 + 1] = ((i + 1) * (horizontalCount + 2) + j);
+                        strip[j * 2] = ((i) * (horizontalCount + 2) + j);
+                    }
+                    else
+                    {
+                        strip[j * 2] = ((i + 1) * (horizontalCount + 2) + j);
+                        strip[j * 2 + 1] = ((i) * (horizontalCount + 2) + j);
+                    }
+                }
+
+                putStrip(strip);
+            }
+        }
+
         public void computeMesh()
         {
-            int verticalCount = (int)((top - bottom) / seed);
-            int horizontalCount = (int)((right - left) / seed);
+            verticalCount = (int)((top - bottom) / seed);
+            horizontalCount = (int)((right - left) / seed);
 
 
             vertexCount=(verticalCount + 2) * (horizontalCount + 2);
@@ -110,6 +137,8 @@ namespace SurfaceViewer
         }
 
         int vertexIndex;
+        private int verticalCount;
+        private int horizontalCount;
 
         void putStrip(int[] indices)
         {

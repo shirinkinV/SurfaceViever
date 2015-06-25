@@ -157,6 +157,7 @@ namespace SurfaceViewer.Parsing
         {
             InitBuiltinFunctions();
             this.expression = expression;
+            if(variables!=null)
             for (int i = 0; i < variables.Length; i++)
             {
                 this.variables[variables[i]] = i;

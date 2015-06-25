@@ -51,7 +51,8 @@ namespace SurfaceViewer
             gl.LoadIdentity();
             gl.Translate(0.0f, 0.0f, -3.0f);
             gl.Rotate(rotate, 0.0f, 1.0f, 0.0f);
-            mesh.draw(gl);
+            if (mesh != null)
+                mesh.draw(gl);
             gl.Flush();
             rotate += 0.3f;
         }
@@ -60,14 +61,7 @@ namespace SurfaceViewer
         {
             OpenGL gl = args.OpenGL;
             gl.ClearColor(0.5f, 0.5f, 0.5f, 1);
-            List<CommonFunction> coordinates = new List<CommonFunction>();
-            coordinates.Add(MathParserObjective.ParseExpressionObject("cos(phi)*cos(psi)", new string[] { "phi", "psi" }));
-            coordinates.Add(MathParserObjective.ParseExpressionObject("cos(phi)*sin(psi)", new string[] { "phi", "psi" }));
-            coordinates.Add(MathParserObjective.ParseExpressionObject("sin(phi)", new string[] { "phi", "psi" }));
-            VectorFunction r = new VectorFunction(coordinates);
-            surface = new Surface(r);
-            mesh = new Mesh(surface, 0.05, -Math.PI / 4, Math.PI / 2, -Math.PI / 2, Math.PI / 4, true, true);
-            mesh.computeMesh();
+
             gl.Enable(OpenGL.GL_DEPTH_TEST);
 
             gl.PolygonMode(OpenGL.GL_BACK, OpenGL.GL_LINE);
@@ -80,6 +74,45 @@ namespace SurfaceViewer
 
             gl.Material(OpenGL.GL_FRONT, OpenGL.GL_DIFFUSE, new float[] { 1, 0, 0, 1 });
             gl.Material(OpenGL.GL_BACK, OpenGL.GL_DIFFUSE, new float[] { 0, 0, 1, 1 });
+            enterData();
+        }
+
+        private void solid_Checked(object sender, RoutedEventArgs e)
+        {
+            if (mesh != null)
+            {
+                mesh.setSolid(true);
+            }
+        }
+
+        private void net_Checked(object sender, RoutedEventArgs e)
+        {
+            if (mesh != null)
+            {
+                mesh.setSolid(false);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            enterData();
+        }
+
+        public void enterData()
+        {
+            List<CommonFunction> coordinates = new List<CommonFunction>();
+            coordinates.Add(MathParserObjective.ParseExpressionObject(x.Text, new string[] { "u", "v" }));
+            coordinates.Add(MathParserObjective.ParseExpressionObject(y.Text, new string[] { "u", "v" }));
+            coordinates.Add(MathParserObjective.ParseExpressionObject(z.Text, new string[] { "u", "v" }));
+            VectorFunction r = new VectorFunction(coordinates);
+            surface = new Surface(r);
+            double left = MathParserObjective.ParseExpression(this.left.Text, null)(null);
+            double right = MathParserObjective.ParseExpression(this.right.Text, null)(null);
+            double bottom = MathParserObjective.ParseExpression(this.bottom.Text, null)(null);
+            double top = MathParserObjective.ParseExpression(this.top.Text, null)(null);
+            double seed = MathParserObjective.ParseExpression(this.seed.Text, null)(null);
+            mesh = new Mesh(surface, seed, left, right, bottom, top, true, (bool)this.net.IsChecked);
+            mesh.computeMesh();
         }
     }
 }

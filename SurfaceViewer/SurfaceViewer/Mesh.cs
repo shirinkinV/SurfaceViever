@@ -112,7 +112,9 @@ namespace SurfaceViewer
 
         void putStrip(int[] indices)
         {
+            if (strips == null) strips = new List<int[]>();
             strips.Add(indices);
+            if (lengths == null) lengths = new List<int>();
             lengths.Add(indices.Length);
         }
 

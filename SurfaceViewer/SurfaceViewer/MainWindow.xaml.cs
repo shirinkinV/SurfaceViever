@@ -66,9 +66,12 @@ namespace SurfaceViewer
             coordinates.Add(MathParserObjective.ParseExpressionObject("sin(phi)", new string[] { "phi", "psi" }));
             VectorFunction r = new VectorFunction(coordinates);
             surface = new Surface(r);
-            mesh = new Mesh(surface, 0.05, -Math.PI / 4, Math.PI / 2, -Math.PI / 2, Math.PI / 4, true, false);
+            mesh = new Mesh(surface, 0.05, -Math.PI / 4, Math.PI / 2, -Math.PI / 2, Math.PI / 4, true, true);
             mesh.computeMesh();
             gl.Enable(OpenGL.GL_DEPTH_TEST);
+
+            gl.PolygonMode(OpenGL.GL_BACK, OpenGL.GL_LINE);
+            gl.Enable(OpenGL.GL_CULL_FACE);
 
             gl.Enable(OpenGL.GL_LIGHTING);
             gl.Enable(OpenGL.GL_LIGHT0);

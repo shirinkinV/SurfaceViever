@@ -20,7 +20,7 @@ namespace SurfaceViewer
         double bottom;
         double top;
         bool doubleSurface;
-        bool invert;
+        bool net;
 
         private int vertexCount;
         private int stripCount;
@@ -28,12 +28,13 @@ namespace SurfaceViewer
         private List<int> lengths;
         private float[] vertices;
         private float[] normals;
+        private float[] doubleNormals;
         private int[] colors;
         private float[] textCoords;
 
 
 
-        public Mesh(Surface surface, double seed, double left, double right, double bottom, double top, bool doubleSurface, bool invert)
+        public Mesh(Surface surface, double seed, double left, double right, double bottom, double top, bool doubleSurface, bool net)
         {
             this.surface = surface;
             this.seed = seed;
@@ -42,7 +43,7 @@ namespace SurfaceViewer
             this.bottom = bottom;
             this.top = top;
             this.doubleSurface = doubleSurface;
-            this.invert = invert;
+            this.net = net;
         }
 
         public void computeMesh()
@@ -91,7 +92,7 @@ namespace SurfaceViewer
 
                 for (int j = 0; j <= horizontalCount + 1; j++)
                 {
-                    if (invert)
+                    if (net)
                     {
                         strip[j * 2 + 1] = ((i + 1) * (horizontalCount + 2) + j);
                         strip[j * 2] = ((i) * (horizontalCount + 2) + j);
@@ -139,13 +140,20 @@ namespace SurfaceViewer
             if (this.normals == null)
             {
                 this.normals = new float[vertexCount * 3];
-                this.normals[index] = normals[0];
-                this.normals[index + 1] = normals[1];
-                this.normals[index + 2] = normals[2];
             }
             this.normals[index] = normals[0];
             this.normals[index + 1] = normals[1];
             this.normals[index + 2] = normals[2];
+            if (doubleSurface)
+            {
+                if (doubleNormals == null)
+                {
+                    doubleNormals = new float[vertexCount * 3];
+                }
+                doubleNormals[index] = -normals[0];
+                doubleNormals[index + 1] = -normals[1];
+                doubleNormals[index + 2] = -normals[2];
+            }
         }
 
         public void putColors(int[] colors)
@@ -178,6 +186,10 @@ namespace SurfaceViewer
 
         public void draw(OpenGL gl)
         {
+            if (net)
+                gl.CullFace(OpenGL.GL_FRONT);
+            else
+                gl.CullFace(OpenGL.GL_BACK);
             if (vertices != null)
             {
                 gl.EnableClientState(OpenGL.GL_VERTEX_ARRAY);
@@ -198,11 +210,25 @@ namespace SurfaceViewer
                 gl.EnableClientState(OpenGL.GL_TEXTURE_COORD_ARRAY);
                 gl.TexCoordPointer(2, OpenGL.GL_FLOAT, 0, textCoords);
             }
+            gl.FrontFace(OpenGL.GL_CCW);
             if (lengths != null && strips != null)
                 for (int i = 0; i < strips.Count; i++)
                 {
                     gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, lengths[i], OpenGL.GL_UNSIGNED_INT, strips[i]);
                 }
+            if (doubleSurface)
+            {
+                if (doubleNormals != null)
+                {
+                    gl.NormalPointer(OpenGL.GL_FLOAT, 0, doubleNormals);
+                }
+                gl.FrontFace(OpenGL.GL_CW);
+
+                for (int i = 0; i < strips.Count; i++)
+                {
+                    gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, lengths[i], OpenGL.GL_UNSIGNED_INT, strips[i]);
+                }
+            }
 
             gl.DisableClientState(OpenGL.GL_VERTEX_ARRAY);
             gl.DisableClientState(OpenGL.GL_COLOR_ARRAY);

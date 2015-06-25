@@ -303,7 +303,7 @@ namespace SurfaceViewer.Functions
             y2.Add(v2.components[2]);
             y2_.Add(true);
             Mul y2O = new Mul(y2, y2_);
-            y.Add(x2O);
+            y.Add(y2O);
             y_.Add(false);
 
             components.Add(new Sum(y, y_));
@@ -318,7 +318,7 @@ namespace SurfaceViewer.Functions
             z1.Add(v2.components[1]);
             z1_.Add(true);
             Mul z1O = new Mul(z1, z1_);
-            z.Add(y1O);
+            z.Add(z1O);
             z_.Add(true);
 
             List<Function> z2 = new List<Function>();
@@ -328,7 +328,7 @@ namespace SurfaceViewer.Functions
             z2.Add(v2.components[0]);
             z2_.Add(true);
             Mul z2O = new Mul(z2, z2_);
-            z.Add(x2O);
+            z.Add(z2O);
             z_.Add(false);
 
             components.Add(new Sum(z, z_));

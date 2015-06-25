@@ -30,12 +30,32 @@ namespace SurfaceViewer.Functions
             VectorFunction v1 = new VectorFunction(derivativesU);
             VectorFunction v2 = new VectorFunction(derivativesV);
 
-            normal = new Vector3Mul(v1, v2);
+            VectorFunction normalLength = new Vector3Mul(v1, v2);
+            CommonFunction length = new Length(normalLength);
+
+            List<bool> normalPow = new List<bool>();
+            normalPow.Add(true); normalPow.Add(false);
+
+            List<Function> normalx = new List<Function>();
+            normalx.Add(normalLength.components[0]); normalx.Add(length);
+
+            List<Function> normaly = new List<Function>();
+            normaly.Add(normalLength.components[1]); normaly.Add(length);
+
+            List<Function> normalz = new List<Function>();
+            normalz.Add(normalLength.components[2]); normalz.Add(length);
+
+            List<CommonFunction> normalCoordinates = new List<CommonFunction>();
+            normalCoordinates.Add(new Mul(normalx, normalPow));
+            normalCoordinates.Add(new Mul(normaly, normalPow));
+            normalCoordinates.Add(new Mul(normalz, normalPow));
+
+            normal = new VectorFunction(normalCoordinates);
         }
 
         public float[] getVertex(double u, double v)
         {
-            double[] result=r.getFunction()(new double[] { u, v });
+            double[] result = r.getFunction()(new double[] { u, v });
             return new float[] { (float)result[0], (float)result[1], (float)result[2] };
         }
 

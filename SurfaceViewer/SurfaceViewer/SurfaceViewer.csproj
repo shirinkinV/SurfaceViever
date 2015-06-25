@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Functions\Function.cs" />
+    <Compile Include="Mesh.cs" />
     <Compile Include="Parsing\MathParserObjective.cs" />
     <Compile Include="Parsing\ParserException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

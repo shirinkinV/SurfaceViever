@@ -191,7 +191,7 @@ namespace SurfaceViewer.Functions
         {
             this.components = new List<CommonFunction>();
             for(int i=0;i<components.Count;i++){
-                this.components[i]=components[i];
+                this.components.Add(components[i]);
             }
         }
 

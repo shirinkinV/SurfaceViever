@@ -12,15 +12,9 @@ namespace SurfaceViewer.Functions
 
         private VectorFunction r, normal;
 
-        private double left, right, top, bottom;
-
-        public Surface(VectorFunction r, double left, double right, double bottom, double top, double seed)
+        public Surface(VectorFunction r)
         {
             this.r = r;
-            this.left = left;
-            this.right = right;
-            this.bottom = bottom;
-            this.top = top;
 
             List<CommonFunction> components = r.components;
             List<DefinedCommonFunction> derivativesU = new List<DefinedCommonFunction>();
@@ -37,6 +31,24 @@ namespace SurfaceViewer.Functions
             VectorFunction v2 = new VectorFunction(derivativesV);
 
             normal = new Vector3Mul(v1, v2);
+        }
+
+        public float[] getVertex(double u, double v)
+        {
+            double[] result=r.getFunction()(new double[] { u, v });
+            return new float[] { (float)result[0], (float)result[1], (float)result[2] };
+        }
+
+        public float[] getNormal(double u, double v)
+        {
+            double[] result = normal.getFunction()(new double[] { u, v });
+            return new float[] { (float)result[0], (float)result[1], (float)result[2] };
+        }
+
+        public int[] getColor(double u, double v)
+        {
+            float[] colors = getNormal(u, v);
+            return new int[] { (int)(255f * colors[0]), (int)(255f * colors[1]), (int)(255f * colors[2]) };
         }
     }
 }

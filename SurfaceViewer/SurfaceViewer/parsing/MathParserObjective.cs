@@ -171,10 +171,10 @@ namespace SurfaceViewer.Parsing
             SkipWhiteSpace();
         }
 
-        public Func<double[], double> Parse()
+        public CommonFunction Parse()
         {
             Reset();
-            return ((CommonFunction)Expression()).getCommonFunction();
+            return ((CommonFunction)Expression());
         }
 
         private Function Expression()
@@ -282,6 +282,11 @@ namespace SurfaceViewer.Parsing
         }
 
         public static Func<double[], double> ParseExpression(string expression, string[] variables)
+        {
+            return new MathParserObjective(expression, variables).Parse().getCommonFunction();
+        }
+
+        public static CommonFunction ParseExpressionObject(string expression, string[] variables)
         {
             return new MathParserObjective(expression, variables).Parse();
         }

@@ -31,3 +31,9 @@ MathNET.Numberic - полезная мтематическая библиоте�
 SharpGL, SharpGL.WPF, SharpGL.WinForms - библиотеки для обращения к командам графического процессора и для внедрения обработчика событий OpenGL в окна WPF и Windows Forms (мы будем использовать WPF)
 
 # От вас требуются активные действия
+![screen1](https://github.com/MechanicsFromUSU/SurfaceViever/blob/master/resources/screenshot1.png)
+![screen2](https://github.com/MechanicsFromUSU/SurfaceViever/blob/master/resources/screenshot2.png)
+![screen3](https://github.com/MechanicsFromUSU/SurfaceViever/blob/master/resources/screenshot3.png)
+![screen4](https://github.com/MechanicsFromUSU/SurfaceViever/blob/master/resources/screenshot4.png)
+![screen5](https://github.com/MechanicsFromUSU/SurfaceViever/blob/master/resources/screenshot5.png)
+![screen6](https://github.com/MechanicsFromUSU/SurfaceViever/blob/master/resources/screenshot6.png)

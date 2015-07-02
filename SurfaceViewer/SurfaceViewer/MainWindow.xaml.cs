@@ -28,6 +28,8 @@ namespace SurfaceViewer
         Mesh mesh;
         float rotate;
 
+        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -70,10 +72,13 @@ namespace SurfaceViewer
             gl.Enable(OpenGL.GL_LIGHTING);
             gl.Enable(OpenGL.GL_LIGHT0);
             gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_DIFFUSE, new float[] { 1, 1, 1, 1 });
+            gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_SPECULAR, new float[] { 1, 1, 1, 1 });
             gl.Light(OpenGL.GL_LIGHT0, OpenGL.GL_POSITION, new float[] { 0, 0, 0, 1 });
 
-            gl.Material(OpenGL.GL_FRONT, OpenGL.GL_DIFFUSE, new float[] { 1, 0, 0, 1 });
-            gl.Material(OpenGL.GL_BACK, OpenGL.GL_DIFFUSE, new float[] { 0, 0, 1, 1 });
+            gl.Material(OpenGL.GL_FRONT, OpenGL.GL_DIFFUSE, new float[] { .8f, 0, 0, 1 });
+            gl.Material(OpenGL.GL_FRONT, OpenGL.GL_SPECULAR, new float[] { .3f, 0, 0, 1 });
+            gl.Material(OpenGL.GL_BACK, OpenGL.GL_DIFFUSE, new float[] { 0, 0, 1, 1 }); 
+            gl.Material(OpenGL.GL_BACK, OpenGL.GL_SPECULAR, new float[] { .2f, 0, 0, 1 });
             enterData();
         }
 

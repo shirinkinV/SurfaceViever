@@ -41,9 +41,6 @@
     <Reference Include="SharpGL">
       <HintPath>..\..\SharpGL.dll</HintPath>
     </Reference>
-    <Reference Include="SharpGL.WinForms">
-      <HintPath>..\..\SharpGL.WinForms.dll</HintPath>
-    </Reference>
     <Reference Include="SharpGL.WPF">
       <HintPath>..\..\SharpGL.WPF.dll</HintPath>
     </Reference>

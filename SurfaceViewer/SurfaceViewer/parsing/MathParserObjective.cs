@@ -261,22 +261,18 @@ namespace SurfaceViewer.Parsing
                 if (look == '(')
                 {
                     Match('(');
-                    result = new OneVarFunction();
-                    ((OneVarFunction)result).function = builtInFunctions[name];
-                    ((OneVarFunction)result).arg = Expression();
+                    result = new OneVarFunction(builtInFunctions[name],(OneVarFunction)Expression());
                     Match(')');
                 }
                 else
                 {
-                    result = new Variable();
-                    ((Variable)result).index = variables[name];
+                    result = new Variable(variables[name]);
                 }
             }
             else
             {
-                result = new OneVarFunction();
                 double constant=GetNum();
-                ((OneVarFunction)result).function = x => constant;
+                result = new OneVarFunction(x => constant,null);
             }
 
             return result;

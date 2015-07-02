@@ -261,7 +261,7 @@ namespace SurfaceViewer.Parsing
                 if (look == '(')
                 {
                     Match('(');
-                    result = new OneVarFunction(builtInFunctions[name],(OneVarFunction)Expression());
+                    result = new OneVarFunction(builtInFunctions[name],(CommonFunction)Expression());
                     Match(')');
                 }
                 else

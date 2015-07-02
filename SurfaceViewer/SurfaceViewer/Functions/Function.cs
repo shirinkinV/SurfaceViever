@@ -220,16 +220,16 @@ namespace SurfaceViewer.Functions
     public class Sum : CommonFunction                                       //функция суммы нескольких элементов с разными знаками, элементы могут быть любыми функциями
     {
 
-        public List<Function> operands;                                     //контейнер, который содержит элементы
+        public List<CommonFunction> operands;                                     //контейнер, который содержит элементы
         public List<bool> signs;                                            //знак (-,+) для каждого элемента
 
         public Sum()
         {
-            operands = new List<Function>();
+            operands = new List<CommonFunction>();
             signs = new List<bool>();
         }
 
-        public Sum(List<Function> operands, List<bool> signs)
+        public Sum(List<CommonFunction> operands, List<bool> signs)
         {
             this.operands = operands;
             this.signs = signs;
@@ -260,16 +260,16 @@ namespace SurfaceViewer.Functions
     public class Mul : CommonFunction                                       //произведение элементов с двумя разными степенями.
     {
 
-        public List<Function> operands;                                     //аналог
+        public List<CommonFunction> operands;                                     //аналог
         public List<bool> powers;                                           //массив степеней, означает либо -1 степень при произведении, либо 1 степень
 
         public Mul()
         {
-            operands = new List<Function>();
+            operands = new List<CommonFunction>();
             powers = new List<bool>();
         }
 
-        public Mul(List<Function> operands, List<bool> powers)
+        public Mul(List<CommonFunction> operands, List<bool> powers)
         {
             this.operands = operands;
             this.powers = powers;
@@ -300,11 +300,11 @@ namespace SurfaceViewer.Functions
 
     public class Pow : CommonFunction                                       //степень
     {
-        public List<Function> baseAndPower;                                 //основание и показатели последовательных степеней
+        public List<CommonFunction> baseAndPower;                                 //основание и показатели последовательных степеней
 
-        public Pow() { baseAndPower = new List<Function>(); }
+        public Pow() { baseAndPower = new List<CommonFunction>(); }
 
-        public Pow(List<Function> baseAndPower)
+        public Pow(List<CommonFunction> baseAndPower)
         {
             this.baseAndPower = baseAndPower;
         }
@@ -384,9 +384,9 @@ namespace SurfaceViewer.Functions
         public Vector3Mul(VectorFunction v1, VectorFunction v2)
             : base(new List<CommonFunction>())
         {
-            List<Function> x = new List<Function>();
+            List<CommonFunction> x = new List<CommonFunction>();
             List<bool> x_ = new List<bool>();
-            List<Function> x1 = new List<Function>();
+            List<CommonFunction> x1 = new List<CommonFunction>();
             List<bool> x1_ = new List<bool>();
 
             x1.Add(v1.components[1]);
@@ -397,7 +397,7 @@ namespace SurfaceViewer.Functions
             x.Add(x1O);
             x_.Add(true);
 
-            List<Function> x2 = new List<Function>();
+            List<CommonFunction> x2 = new List<CommonFunction>();
             List<bool> x2_ = new List<bool>();
             x2.Add(v1.components[2]);
             x2_.Add(true);
@@ -409,9 +409,9 @@ namespace SurfaceViewer.Functions
 
             components.Add(new Sum(x, x_));
 
-            List<Function> y = new List<Function>();
+            List<CommonFunction> y = new List<CommonFunction>();
             List<bool> y_ = new List<bool>();
-            List<Function> y1 = new List<Function>();
+            List<CommonFunction> y1 = new List<CommonFunction>();
             List<bool> y1_ = new List<bool>();
 
             y1.Add(v1.components[2]);
@@ -422,7 +422,7 @@ namespace SurfaceViewer.Functions
             y.Add(y1O);
             y_.Add(true);
 
-            List<Function> y2 = new List<Function>();
+            List<CommonFunction> y2 = new List<CommonFunction>();
             List<bool> y2_ = new List<bool>();
             y2.Add(v1.components[0]);
             y2_.Add(true);
@@ -434,9 +434,9 @@ namespace SurfaceViewer.Functions
 
             components.Add(new Sum(y, y_));
 
-            List<Function> z = new List<Function>();
+            List<CommonFunction> z = new List<CommonFunction>();
             List<bool> z_ = new List<bool>();
-            List<Function> z1 = new List<Function>();
+            List<CommonFunction> z1 = new List<CommonFunction>();
             List<bool> z1_ = new List<bool>();
 
             z1.Add(v1.components[0]);
@@ -447,7 +447,7 @@ namespace SurfaceViewer.Functions
             z.Add(z1O);
             z_.Add(true);
 
-            List<Function> z2 = new List<Function>();
+            List<CommonFunction> z2 = new List<CommonFunction>();
             List<bool> z2_ = new List<bool>();
             z2.Add(v1.components[1]);
             z2_.Add(true);

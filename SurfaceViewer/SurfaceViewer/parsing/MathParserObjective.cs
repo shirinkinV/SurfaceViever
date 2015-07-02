@@ -178,7 +178,7 @@ namespace SurfaceViewer.Parsing
             return ((CommonFunction)Expression());
         }
 
-        private Function Expression()
+        private CommonFunction Expression()
         {
             Sum sum = new Sum();
             if (!IsAddop(look))
@@ -207,7 +207,7 @@ namespace SurfaceViewer.Parsing
             return sum;
         }
 
-        private Function Term()
+        private CommonFunction Term()
         {
             Mul mul = new Mul();
             mul.operands.Add(Factor());
@@ -233,7 +233,7 @@ namespace SurfaceViewer.Parsing
             return mul;
         }
 
-        private Function Factor()
+        private CommonFunction Factor()
         {
             Pow pow = new Pow();
             pow.baseAndPower.Add(Power());
@@ -245,9 +245,9 @@ namespace SurfaceViewer.Parsing
             return pow;
         }
 
-        private Function Power()
+        private CommonFunction Power()
         {
-            Function result = null;
+            CommonFunction result = null;
             if (look == '(')
             {
                 Match('(');

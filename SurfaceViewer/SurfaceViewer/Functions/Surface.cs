@@ -36,13 +36,13 @@ namespace SurfaceViewer.Functions
             List<bool> normalPow = new List<bool>();
             normalPow.Add(true); normalPow.Add(false);
 
-            List<Function> normalx = new List<Function>();
+            List<CommonFunction> normalx = new List<CommonFunction>();
             normalx.Add(normalLength.components[0]); normalx.Add(length);
 
-            List<Function> normaly = new List<Function>();
+            List<CommonFunction> normaly = new List<CommonFunction>();
             normaly.Add(normalLength.components[1]); normaly.Add(length);
 
-            List<Function> normalz = new List<Function>();
+            List<CommonFunction> normalz = new List<CommonFunction>();
             normalz.Add(normalLength.components[2]); normalz.Add(length);
 
             List<CommonFunction> normalCoordinates = new List<CommonFunction>();

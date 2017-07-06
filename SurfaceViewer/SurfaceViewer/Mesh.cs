@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SurfaceViewer.Functions;
 using SharpGL;
+using System.Runtime.InteropServices;
 
 namespace SurfaceViewer
 {
@@ -24,12 +25,11 @@ namespace SurfaceViewer
 
         private int vertexCount;
         private int stripCount;
-        private List<int[]> strips;
+        private List<uint[]> strips;
         private List<int> lengths;
         private float[] vertices;
         private float[] normals;
         private float[] doubleNormals;
-        private int[] colors;
         private float[] textCoords;
 
 
@@ -53,19 +53,19 @@ namespace SurfaceViewer
             lengths = null;
             for (int i = 0; i <= verticalCount; i++)
             {
-                int[] strip = new int[(horizontalCount + 2) * 2];
+                uint[] strip = new uint[(horizontalCount + 2) * 2];
 
                 for (int j = 0; j <= horizontalCount + 1; j++)
                 {
                     if (net)
                     {
-                        strip[j * 2 + 1] = ((i + 1) * (horizontalCount + 2) + j);
-                        strip[j * 2] = ((i) * (horizontalCount + 2) + j);
+                        strip[j * 2 + 1] = (uint)((i + 1) * (horizontalCount + 2) + j);
+                        strip[j * 2] = (uint)((i) * (horizontalCount + 2) + j);
                     }
                     else
                     {
-                        strip[j * 2] = ((i + 1) * (horizontalCount + 2) + j);
-                        strip[j * 2 + 1] = ((i) * (horizontalCount + 2) + j);
+                        strip[j * 2] = (uint)((i + 1) * (horizontalCount + 2) + j);
+                        strip[j * 2 + 1] = (uint)((i) * (horizontalCount + 2) + j);
                     }
                 }
 
@@ -89,12 +89,10 @@ namespace SurfaceViewer
                 {
                     double u = left + seed * j;
                     putVertices(surface.getVertex(u, v));
-                    putColors(surface.getColor(u, v));
                     putNormals(surface.getNormal(u, v));
                     vertexIndex++;
                 }
                 putVertices(surface.getVertex(right, v));
-                putColors(surface.getColor(right, v));
                 putNormals(surface.getNormal(right, v));
                 vertexIndex++;
             }
@@ -104,30 +102,28 @@ namespace SurfaceViewer
             {
                 double u = left + seed * j;
                 putVertices(surface.getVertex(u, vv));
-                putColors(surface.getColor(u, vv));
                 putNormals(surface.getNormal(u, vv));
                 vertexIndex++;
             }
             putVertices(surface.getVertex(right, vv));
-            putColors(surface.getColor(right, vv));
             putNormals(surface.getNormal(right, vv));
             vertexIndex++;
 
             for (int i = 0; i <= verticalCount; i++)
             {
-                int[] strip = new int[(horizontalCount + 2) * 2];
+                uint[] strip = new uint[(horizontalCount + 2) * 2];
 
                 for (int j = 0; j <= horizontalCount + 1; j++)
                 {
                     if (net)
                     {
-                        strip[j * 2 + 1] = ((i + 1) * (horizontalCount + 2) + j);
-                        strip[j * 2] = ((i) * (horizontalCount + 2) + j);
+                        strip[j * 2 + 1] = (uint)((i + 1) * (horizontalCount + 2) + j);
+                        strip[j * 2] = (uint)((i) * (horizontalCount + 2) + j);
                     }
                     else
                     {
-                        strip[j * 2] = ((i + 1) * (horizontalCount + 2) + j);
-                        strip[j * 2 + 1] = ((i) * (horizontalCount + 2) + j);
+                        strip[j * 2] = (uint)((i + 1) * (horizontalCount + 2) + j);
+                        strip[j * 2 + 1] = (uint)((i) * (horizontalCount + 2) + j);
                     }
                 }
 
@@ -140,9 +136,9 @@ namespace SurfaceViewer
         private int verticalCount;
         private int horizontalCount;
 
-        void putStrip(int[] indices)
+        void putStrip(uint[] indices)
         {
-            if (strips == null) strips = new List<int[]>();
+            if (strips == null) strips = new List<uint[]>();
             strips.Add(indices);
             if (lengths == null) lengths = new List<int>();
             lengths.Add(indices.Length);
@@ -185,21 +181,6 @@ namespace SurfaceViewer
             }
         }
 
-        public void putColors(int[] colors)
-        {
-            int index = vertexIndex * 3;
-            if (this.colors == null)
-            {
-                this.colors = new int[vertexCount * 3];
-                this.colors[index] = colors[0];
-                this.colors[index + 1] = colors[1];
-                this.colors[index + 2] = colors[2];
-            }
-            this.colors[index] = colors[0];
-            this.colors[index + 1] = colors[1];
-            this.colors[index + 2] = colors[2];
-        }
-
         public void putTextCoords(float[] textCoords)
         {
             int index = vertexIndex * 2;
@@ -222,17 +203,12 @@ namespace SurfaceViewer
             if (vertices != null)
             {
                 gl.EnableClientState(OpenGL.GL_VERTEX_ARRAY);
-                gl.VertexPointer(3, OpenGL.GL_FLOAT, 0, vertices);
+                gl.VertexPointer(3, 0, vertices);
             }
             if (normals != null)
             {
                 gl.EnableClientState(OpenGL.GL_NORMAL_ARRAY);
                 gl.NormalPointer(OpenGL.GL_FLOAT, 0, normals);
-            }
-            if (colors != null)
-            {
-                gl.EnableClientState(OpenGL.GL_COLOR_ARRAY);
-                gl.ColorPointer(3, OpenGL.GL_UNSIGNED_BYTE, 0, colors);
             }
             if (textCoords != null)
             {
@@ -243,7 +219,7 @@ namespace SurfaceViewer
             if (lengths != null && strips != null)
                 for (int i = 0; i < strips.Count; i++)
                 {
-                    gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, lengths[i], OpenGL.GL_UNSIGNED_INT, strips[i]);
+                    gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, lengths[i], strips[i]);
                 }
             if (doubleSurface)
             {
@@ -255,7 +231,7 @@ namespace SurfaceViewer
 
                 for (int i = 0; i < strips.Count; i++)
                 {
-                    gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, lengths[i], OpenGL.GL_UNSIGNED_INT, strips[i]);
+                    gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, lengths[i], strips[i]);
                 }
             }
 

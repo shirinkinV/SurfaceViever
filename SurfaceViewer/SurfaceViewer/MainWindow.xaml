@@ -32,6 +32,6 @@
                 <TextBox Name="seed" Height="23" Margin="10,368,10,0" TextWrapping="Wrap" Text="0.5" VerticalAlignment="Top"/>
             </Grid>
         </Border>
-        <sharpGL:OpenGLControl x:Name="openGL" Margin="10,10,265,10" DrawFPS="True" Resized="openGL_Resized" OpenGLDraw="openGL_OpenGLDraw" OpenGLInitialized="openGL_OpenGLInitialized" d:IsHidden="True"/>
+        <sharpGL:OpenGLControl x:Name="openGL" Margin="10,10,265,10" DrawFPS="True"  OpenGLDraw="openGL_OpenGLDraw" OpenGLInitialized="openGL_OpenGLInitialized" d:IsHidden="True" Resized="openGL_Resized"/>
     </Grid>
 </Window>

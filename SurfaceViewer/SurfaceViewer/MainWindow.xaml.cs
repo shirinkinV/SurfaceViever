@@ -15,7 +15,8 @@ using System.Windows.Shapes;
 using SharpGL;
 using SharpGL.WPF;
 using SurfaceViewer.Functions;
-using SurfaceViewer.Parsing;
+using Symbolic.Functions;
+using Symbolic;
 
 namespace SurfaceViewer
 {
@@ -27,15 +28,14 @@ namespace SurfaceViewer
         Surface surface;
         Mesh mesh;
         float rotate;
-
-        
+        private DateTime begin;
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void openGL_Resized(object sender, SharpGL.OpenGLEventArgs args)
+        private void openGL_Resized(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)
         {
             OpenGL gl = args.OpenGL;
             gl.MatrixMode(OpenGL.GL_PROJECTION);
@@ -46,20 +46,20 @@ namespace SurfaceViewer
             gl.MatrixMode(OpenGL.GL_MODELVIEW);
         }
 
-        private void openGL_OpenGLDraw(object sender, SharpGL.OpenGLEventArgs args)
+        private void openGL_OpenGLDraw(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)
         {
             OpenGL gl = args.OpenGL;
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
             gl.LoadIdentity();
             gl.Translate(0.0f, 0.0f, -3.0f);
+            rotate = (float)((DateTime.Now - begin).TotalSeconds)*10;
             gl.Rotate(rotate, 0.0f, 1.0f, 0.0f);
             if (mesh != null)
                 mesh.draw(gl);
             gl.Flush();
-            rotate += 0.3f;
         }
 
-        private void openGL_OpenGLInitialized(object sender, SharpGL.OpenGLEventArgs args)
+        private void openGL_OpenGLInitialized(object sender, SharpGL.SceneGraph.OpenGLEventArgs args)
         {
             OpenGL gl = args.OpenGL;
             gl.ClearColor(0.5f, 0.5f, 0.5f, 1);
@@ -80,6 +80,7 @@ namespace SurfaceViewer
             gl.Material(OpenGL.GL_BACK, OpenGL.GL_DIFFUSE, new float[] { 0, 0, 1, 1 }); 
             gl.Material(OpenGL.GL_BACK, OpenGL.GL_SPECULAR, new float[] { .2f, 0, 0, 1 });
             enterData();
+            begin = DateTime.Now;
         }
 
         private void solid_Checked(object sender, RoutedEventArgs e)
@@ -106,16 +107,16 @@ namespace SurfaceViewer
         public void enterData()
         {
             List<CommonFunction> coordinates = new List<CommonFunction>();
-            coordinates.Add(MathParserObjective.ParseExpressionObject(x.Text, new string[] { "u", "v" }));
-            coordinates.Add(MathParserObjective.ParseExpressionObject(y.Text, new string[] { "u", "v" }));
-            coordinates.Add(MathParserObjective.ParseExpressionObject(z.Text, new string[] { "u", "v" }));
+            coordinates.Add(Parser.ParseExpressionObject(x.Text, new string[] { "u", "v" }));
+            coordinates.Add(Parser.ParseExpressionObject(y.Text, new string[] { "u", "v" }));
+            coordinates.Add(Parser.ParseExpressionObject(z.Text, new string[] { "u", "v" }));
             VectorFunction r = new VectorFunction(coordinates);
             surface = new Surface(r);
-            double left = MathParserObjective.ParseExpression(this.left.Text, null)(null);
-            double right = MathParserObjective.ParseExpression(this.right.Text, null)(null);
-            double bottom = MathParserObjective.ParseExpression(this.bottom.Text, null)(null);
-            double top = MathParserObjective.ParseExpression(this.top.Text, null)(null);
-            double seed = MathParserObjective.ParseExpression(this.seed.Text, null)(null);
+            double left = Parser.ParseExpression(this.left.Text, null)(null);
+            double right = Parser.ParseExpression(this.right.Text, null)(null);
+            double bottom = Parser.ParseExpression(this.bottom.Text, null)(null);
+            double top = Parser.ParseExpression(this.top.Text, null)(null);
+            double seed = Parser.ParseExpression(this.seed.Text, null)(null);
             mesh = new Mesh(surface, seed, left, right, bottom, top, true, (bool)this.net.IsChecked);
             mesh.computeMesh();
         }

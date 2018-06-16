@@ -3,18 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:sharpGL="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="SurfaceViewer.MainWindow"
-        Title="SurfaceViewer" MinWidth="600" MinHeight="500" d:DesignWidth="600" d:DesignHeight="500">
+        Title="SurfaceViewer" MinWidth="600" MinHeight="500" Height="777.5" Width="870">
     <Grid>
 
         <Border BorderBrush="Black" BorderThickness="1" Margin="0,10,10,10" HorizontalAlignment="Right" Width="250">
             <Grid>
                 <Label Content="Введите уравнения поверхности" Margin="10,10,10,0" VerticalAlignment="Top" FontWeight="SemiBold"/>
-                <Label Content="x(u,v)" Margin="10,41,200,0" VerticalAlignment="Top"/>
-                <Label Content="y(u,v)" Margin="10,67,200,0" VerticalAlignment="Top"/>
-                <Label Content="z(u,v)" Margin="10,93,200,0" VerticalAlignment="Top"/>
-                <TextBox Name="x" Height="23" Margin="53,45,10,0" TextWrapping="Wrap" Text="cos(u)*cos(v)" VerticalAlignment="Top"/>
-                <TextBox Name="y" Height="23" Margin="53,71,10,0" TextWrapping="Wrap" Text="cos(u)*sin(v)" VerticalAlignment="Top"/>
-                <TextBox Name="z" Height="23" Margin="53,97,10,0" TextWrapping="Wrap" Text="sin(u)" VerticalAlignment="Top"/>
+                <Label Content="x(s,t)" Margin="10,41,200,0" VerticalAlignment="Top"/>
+                <Label Content="y(s,t)" Margin="10,67,200,0" VerticalAlignment="Top"/>
+                <Label Content="z(s,t)" Margin="10,93,200,0" VerticalAlignment="Top"/>
+                <TextBox Name="x" Height="23" Margin="53,45,10,0" TextWrapping="Wrap" Text="cos(s)*cos(t)" VerticalAlignment="Top"/>
+                <TextBox Name="y" Height="23" Margin="53,71,10,0" TextWrapping="Wrap" Text="cos(s)*sin(t)" VerticalAlignment="Top"/>
+                <TextBox Name="z" Height="23" Margin="53,97,10,0" TextWrapping="Wrap" Text="sin(s)" VerticalAlignment="Top"/>
                 <Label Content="Введите края области параметризации" Margin="10,125,10,0" VerticalAlignment="Top" FontWeight="SemiBold"/>
                 <Label Content="левый" Margin="10,156,183,0" VerticalAlignment="Top"/>
                 <Label Content="правый" Margin="10,182,183,0" VerticalAlignment="Top"/>
@@ -27,9 +27,20 @@
                 <RadioButton Checked="solid_Checked" Name="solid" IsChecked="True" GroupName="group" Content="Сплошной" HorizontalAlignment="Left" Margin="10,297,0,0" VerticalAlignment="Top"/>
                 <Label Content="Режим отображения" Margin="10,266,10,0" VerticalAlignment="Top" FontWeight="SemiBold"/>
                 <RadioButton Checked="net_Checked" Name="net" GroupName="group" Content="Сетка" HorizontalAlignment="Left" Margin="10,317,0,0" VerticalAlignment="Top"/>
-                <Button Click="Button_Click" Content="Подтвердить ввод данных" Margin="10,0,10,10" Height="20" VerticalAlignment="Bottom"/>
+                <Button Click="Button_Click" Content="Посчитать вершины и нормали" Margin="10,0,10,10" Height="20" VerticalAlignment="Bottom"/>
                 <Label Content="Диаметр разбиения области" Margin="10,337,10,0" VerticalAlignment="Top" FontWeight="SemiBold"/>
-                <TextBox Name="seed" Height="23" Margin="10,368,10,0" TextWrapping="Wrap" Text="0.5" VerticalAlignment="Top"/>
+                <TextBox Name="seed" Height="23" Margin="10,368,10,0" TextWrapping="Wrap" Text="0.1" VerticalAlignment="Top"/>
+                <Label Content="Режим рассчёта нормалей" Margin="10,396,10,0" VerticalAlignment="Top" FontWeight="SemiBold"/>
+                <RadioButton Content="Численный" HorizontalAlignment="Left" Margin="10,427,0,0" VerticalAlignment="Top" GroupName="numericOrNot"/>
+                <RadioButton x:Name="analitics" Content="Аналитический" HorizontalAlignment="Left" Margin="10,447,0,0" VerticalAlignment="Top" GroupName="numericOrNot" IsChecked="True"/>
+                <Label Content="Готовые поверхности" Margin="10,467,10,0" VerticalAlignment="Top" FontWeight="SemiBold"/>
+                <Button x:Name="sphere" Content="Сфера" HorizontalAlignment="Left" Margin="10,498,0,0" VerticalAlignment="Top" Width="50" Click="sphere_Click"/>
+                <Button x:Name="helicoid" Content="Геликоид" HorizontalAlignment="Left" Margin="65,498,0,0" VerticalAlignment="Top" Width="75" Click="helicoid_Click"/>
+                <Button x:Name="monkey" Content="Обезьянье седло" HorizontalAlignment="Left" Margin="10,523,0,0" VerticalAlignment="Top" Width="112" Click="monkey_Click"/>
+                <Button x:Name="parabol" Content="Параболоид" HorizontalAlignment="Left" Margin="145,498,0,0" VerticalAlignment="Top" Width="93" Click="parabol_Click"/>
+                <Button x:Name="hyperbol" Content="Гиперболический" HorizontalAlignment="Left" Margin="127,523,0,0" VerticalAlignment="Top" Width="111" Click="hyperbol_Click"/>
+                <Button x:Name="thorus" Content="Красивый тор" HorizontalAlignment="Left" Margin="10,548,0,0" VerticalAlignment="Top" Width="228" Click="thorus_Click"/>
+                <Button x:Name="thorus_broken" Content="Испорченный тор" HorizontalAlignment="Left" Margin="10,573,0,0" VerticalAlignment="Top" Width="228" Click="thorus_broken_Click"/>
             </Grid>
         </Border>
         <sharpGL:OpenGLControl x:Name="openGL" Margin="10,10,265,10" DrawFPS="True"  OpenGLDraw="openGL_OpenGLDraw" OpenGLInitialized="openGL_OpenGLInitialized" d:IsHidden="True" Resized="openGL_Resized"/>
